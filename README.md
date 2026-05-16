@@ -42,16 +42,27 @@ Este projeto é uma solução fullstack completa desenvolvida para a gestão adm
 
 ## 📂 Estrutura do Projeto
 
-O repositório está dividido em duas frentes principais:
+O repositório está dividido nas seguintes frentes principais:
 
-*   📂 [`/frontend`](frontend): Código fonte da interface do usuário.
-*   📂 [`/backend`](backend): Estrutura da API, modelos do banco e regras de negócio.
+*   📂 [`/docs`](docs): Arquivos Markdown e configuração do portal de documentação gerado pelo MkDocs.
+*   📂 [`/frontend`](frontend): Código fonte da interface do usuário (React + Vite).
+*   📂 [`/backend`](backend): Estrutura da API, modelos do banco e regras de negócio (Node.js + Prisma).
 
-### Documentação Auxiliar
-Para detalhes técnicos específicos, consulte:
-1.  📖 [**COMO_USAR.md**](COMO_USAR.md) - Instruções de instalação e execução.
-2.  🏗️ [**ARQUITETURA.md**](ARQUITETURA.md) - Detalhes sobre o design do sistema.
-3.  🔌 [**API.md**](API.md) - Documentação dos endpoints e integrações.
+### 📚 Documentação (MkDocs) e Boas Práticas
+
+Todas as documentações técnicas e regras do projeto estão agora integradas via **MkDocs**.
+Para visualizar o portal de documentação localmente no seu navegador, rode no terminal:
+
+```bash
+python -m pip install mkdocs-material
+python -m mkdocs serve
+```
+
+Você também pode consultar os arquivos Markdown diretamente:
+1.  ⚖️ [**CONSTITUTIONS.md**](CONSTITUTIONS.md) - Regras fundamentais de desenvolvimento e boas práticas da equipe.
+2.  📖 [**COMO_USAR.md**](COMO_USAR.md) - Instruções de instalação e execução.
+3.  🏗️ [**ARQUITETURA.md**](ARQUITETURA.md) - Detalhes sobre o design do sistema (Backend/Frontend).
+4.  🔌 [**API.md**](API.md) - Documentação dos endpoints, autenticação e integrações.
 
 ---
 
