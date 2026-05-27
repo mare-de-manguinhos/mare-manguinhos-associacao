@@ -103,6 +103,13 @@ model Produto {
   criadoEm     DateTime  @default(now())
   atualizadoEm DateTime  @updatedAt
 
+  especie           String?
+  precoPorKg        Float?          @map("preco_por_kg")
+  pesoDisponivelKg  Float?          @map("peso_disponivel_kg")
+  cortesDisponiveis String          @default("[]") @map("cortes_disponiveis")
+  categoria         String          @default("peixe")
+  itensPedido       ItemPedidoApp[]
+
   loja       Loja        @relation(fields: [lojaId], references: [id], onDelete: Cascade)
   itensVenda ItemVenda[]
 
@@ -259,4 +266,64 @@ model LogAuditoria {
   usuario Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
 
   @@map("logs_auditoria")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// APP DO CONSUMIDOR
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Consumidor {
+  id        String     @id @default(uuid())
+  nome      String
+  email     String     @unique
+  telefone  String
+  senhaHash String     @map("senha_hash")
+  criadoEm DateTime   @default(now()) @map("criado_em")
+  enderecos EnderecoConsumidor[]
+  pedidos   PedidoApp[]
+  @@map("consumidores")
+}
+
+model EnderecoConsumidor {
+  id           String     @id @default(uuid())
+  consumidorId String     @map("consumidor_id")
+  consumidor   Consumidor @relation(fields: [consumidorId], references: [id], onDelete: Cascade)
+  label        String
+  logradouro   String
+  numero       String
+  bairro       String
+  cidade       String
+  estado       String
+  cep          String
+  complemento  String?
+  principal    Boolean    @default(false)
+  @@map("enderecos_consumidor")
+}
+
+model PedidoApp {
+  id              String         @id @default(uuid())
+  consumidorId    String         @map("consumidor_id")
+  consumidor      Consumidor     @relation(fields: [consumidorId], references: [id])
+  status          String         @default("confirmado")
+  enderecoEntrega String         @map("endereco_entrega")
+  janelaEntrega   String         @map("janela_entrega")
+  frete           Float
+  valorTotal      Float          @map("valor_total")
+  formaPagamento  String         @map("forma_pagamento")
+  itens           ItemPedidoApp[]
+  criadoEm        DateTime       @default(now()) @map("criado_em")
+  atualizadoEm    DateTime       @updatedAt @map("atualizado_em")
+  @@map("pedidos_app")
+}
+
+model ItemPedidoApp {
+  id            String    @id @default(uuid())
+  pedidoId      String    @map("pedido_id")
+  pedido        PedidoApp @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  produtoId     String    @map("produto_id")
+  produto       Produto   @relation(fields: [produtoId], references: [id])
+  corte         String
+  pesoKg        Float     @map("peso_kg")
+  precoUnitario Float     @map("preco_unitario")
+  @@map("itens_pedido_app")
 }
